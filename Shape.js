@@ -12,6 +12,7 @@ function Shape(points, x, y, color, stroke) {
 
 Shape.prototype.draw = function (ctx) {
     var p = this.points;
+
     ctx.save();
     ctx.fillStyle = this.color;
     ctx.strokeStyle = this.stroke;
@@ -36,7 +37,9 @@ Shape.prototype.draw = function (ctx) {
 
 Shape.prototype.drawNormals = function (ctx) {
     var m = this.medians,
-        n = this.normals;
+        n = this.normals,
+        size = 15,
+        med;
 
     ctx.save();
 
@@ -55,13 +58,14 @@ Shape.prototype.drawNormals = function (ctx) {
     });
 
     ctx.fillStyle = "red";
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 1;
     ctx.strokeStyle = "#003300";
 
     n.forEach(function (point, i) {
         ctx.beginPath();
-        ctx.moveTo(m[i].x, m[i].y);
-        ctx.lineTo(m[i].x + point.x * 25, m[i].y + point.y * 25);
+        med = m[i % m.length];
+        ctx.moveTo(med.x, med.y);
+        ctx.lineTo(med.x + point.x * size, med.y + point.y * size);
         ctx.fill();
         ctx.stroke();
         ctx.closePath();
@@ -72,16 +76,18 @@ Shape.prototype.drawNormals = function (ctx) {
 
 Shape.prototype.getNormals = function () {
     var p = this.points,
+        n = p.length,
         crt, nxt, l, x1, y1;
 
     this.normals = [];
-    for (var i = 0; i < p.length; i++) {
+    for (var i = 0; i < n; i++) {
         crt = p[i];
         nxt = p[i + 1] || p[0];
         x1 = (nxt.y - crt.y);
         y1 = -(nxt.x - crt.x);
         l = Math.sqrt(x1 * x1 + y1 * y1);
-        this.normals.push({x: x1 / l, y: y1 / l});
+        this.normals[i] = {x: x1 / l, y: y1 / l};
+        this.normals[n + i] = {x: - x1 / l, y: - y1 / l};
     }
 };
 
