@@ -8,5 +8,5 @@ The demo is accessible on the following [link][demo].
 As the theoretical base was taken the tutsPlus [tutorial].
 
 
-[demo]: <https://yurgeen.github.io/SAT-collisions/>
+[demo]: <https://urgn.github.io/SAT-collisions/>
 [tutorial]: <http://gamedevelopment.tutsplus.com/tutorials/collision-detection-using-the-separating-axis-theorem--gamedev-169>
